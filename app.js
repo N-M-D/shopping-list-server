@@ -48,7 +48,7 @@ app.post('/login', function(req, res){
             return res.status(404).send();
         }
         const user = response.rows[0];
-        const hash = user.role;
+        const hash = user.password;
         bcrypt.compare(password, hash, (err, result) => {
             if(result){
                 const payload = {
