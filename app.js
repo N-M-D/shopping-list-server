@@ -61,7 +61,7 @@ app.post('/login', function(req, res){
                     }
                     return res.status(200).send({
                         token: token
-                    })
+                    });
                 })
             } else {
                 return res.status(401).send();
