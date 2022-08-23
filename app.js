@@ -23,7 +23,7 @@ app.post('/register', function(req, res){
     const body = req.body;
     const email = body.email;
     const username = body.username;
-    const password = user.password;
+    const password = body.password;
     bcrypt.genSalt(saltRounds, function(err, salt){
         bcrypt.hash(password, salt, function(err, hash){
             User.register(email, username, hash)
