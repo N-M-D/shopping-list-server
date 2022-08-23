@@ -15,7 +15,7 @@ const User = require ('./models/user')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const isLoggedInMiddleWare = require('./isLoggedInMiddleWare')
+const isLoggedInMiddleWare = require('./isLoggedInMiddleware')
 
 app.use(cors());
 
