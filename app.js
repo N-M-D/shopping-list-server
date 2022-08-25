@@ -97,7 +97,7 @@ app.post('/user/details', isLoggedInMiddleWare, (req, res) => {
     User.getDetails(id)
     .then((response) => {
         console.log(response);
-        res.status(200).send(response);
+        return res.status(200).send(response);
     })
 })
 
