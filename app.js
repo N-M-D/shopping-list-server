@@ -84,6 +84,8 @@ app.post('/login', function(req, res){
 
 app.put('/user/update', isLoggedInMiddleWare, upload.single('pfp'), (req, res) => {
     const id = req.decodedToken.user_id;
+    const file = req.file;
+    console.log(file);
     const body = req.body;
     console.log(body);
     res.status(200).send();
