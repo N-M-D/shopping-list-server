@@ -9,6 +9,16 @@ const User = {
     verify: function(email){
         const query = `SELECT * FROM users WHERE email=$1`;
         return pool.query(query, [email]);
+    },
+
+    updateUser: function(id, username, pfp){
+        const query = `UPDATE users SET username = $2, pfp = $3 WHERE id = $1`;
+        return pool.query(query, [id, username, pfp]);
+    },
+
+    getDetails: function(id){
+        const query = `SELECT * FROM users WHERE id = $1`;
+        return pool.query(query, [id]);
     }
 }
 

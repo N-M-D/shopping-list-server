@@ -6,11 +6,17 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = "jwt-secret-key-do-not-share";
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const fs = require('fs');
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const app = express();
 const port = process.env.PORT || 3000
 
 const User = require ('./models/user')
+const { uploadFile } = require("./models/s3")
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -19,7 +25,9 @@ const isLoggedInMiddleWare = require('./isLoggedInMiddleware')
 
 app.use(cors());
 
-app.post('/register', function(req, res){
+app.post('/register', upload.single('image'), function(req, res){
+    const file = req.file;
+    console.log(file);
     const body = req.body;
     const email = body.email;
     const username = body.username;
@@ -71,6 +79,24 @@ app.post('/login', function(req, res){
     .catch((error) => {
         console.log(error);
         return res.status(400).send(error);
+    })
+})
+
+app.put('/user/update', isLoggedInMiddleWare, upload.single('image'), (req, res) => {
+    // const file = req.file;
+    // console.log(file);
+    const body = req.body;
+    console.log(body);
+    //const result = await uploadFile(file);
+
+})
+
+app.post('user/details', isLoggedInMiddleWare, (req, res) => {
+    const id = req.decodedToken.user_id;
+    User.getDetails(id)
+    .then((response) => {
+        console.log(response);
+        res.status(200).send(response);
     })
 })
 
