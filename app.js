@@ -91,7 +91,7 @@ app.put('/user/update', isLoggedInMiddleWare, upload.single('image'), (req, res)
 
 })
 
-app.post('user/details', isLoggedInMiddleWare, (req, res) => {
+app.post('/user/details', isLoggedInMiddleWare, (req, res) => {
     const id = req.decodedToken.user_id;
     User.getDetails(id)
     .then((response) => {
