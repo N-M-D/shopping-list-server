@@ -85,9 +85,11 @@ app.post('/login', function(req, res){
 app.put('/user/update', upload.single('pfp'), (req, res) => {
     //const id = req.decodedToken.user_id;
     const file = req.file;
-    console.log(file);
     const body = req.body;
-    console.log(body);
+    const email = body.email;
+    const username = body.username
+    const result = await uploadFile(file);
+    console.log(result)
     res.status(200).send();
 
 })
