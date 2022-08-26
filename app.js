@@ -82,7 +82,7 @@ app.post('/login', function(req, res){
     })
 })
 
-app.put('/user/update', upload.single('pfp'), (req, res) => {
+app.put('/user/update', upload.single('pfp'), async (req, res) => {
     //const id = req.decodedToken.user_id;
     const file = req.file;
     const body = req.body;
