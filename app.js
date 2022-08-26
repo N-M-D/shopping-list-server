@@ -88,9 +88,12 @@ app.put('/user/update', upload.single('pfp'), async (req, res) => {
     const body = req.body;
     const email = body.email;
     const username = body.username
-    const result = await uploadFile(file);
-    console.log(result)
-    res.status(200).send();
+    await uploadFile(file)
+    .then((response) => {
+        console.log(response)
+        return res.status(200).send()
+    });
+    
 
 })
 
