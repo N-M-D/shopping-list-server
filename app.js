@@ -94,10 +94,8 @@ app.put('/user/update', upload.single('pfp'), (req, res) => {
 
 app.post('/user/details', isLoggedInMiddleWare, (req, res) => {
     const id = req.decodedToken.user_id;
-    console.log(id);
     User.getDetails(id)
     .then((response) => {
-        console.log(response);
         return res.status(200).send(response);
     })
 })
