@@ -95,8 +95,12 @@ app.put('/user/update', [upload.single('pfp'), isLoggedInMiddleWare], async (req
         let location = response.Location;
         User.updateUser(id, username, location)
         .then((result) => {
-            console.log(result.rowCount);
-            return res.status(200).send();
+            if(result.rowCount > 0){
+                return res.status(200).send();
+            }else{
+                return res.status(404).send();
+            }
+            
         })
     });
     
