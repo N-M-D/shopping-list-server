@@ -82,10 +82,12 @@ app.post('/login', function(req, res){
     })
 })
 
-app.put('/user/update', upload.single('pfp'), async (req, res) => {
-    //const id = req.decodedToken.user_id;
+app.put('/user/update', [upload.single('pfp'), isLoggedInMiddleWare], async (req, res) => {
+    const id = req.decodedToken.user_id;
+    console.log("ID:",id);
     const file = req.file;
     const body = req.body;
+    console.log("Body:", body);
     const email = body.email;
     const username = body.username
     await uploadFile(file)
