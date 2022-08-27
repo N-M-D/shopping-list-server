@@ -92,8 +92,12 @@ app.put('/user/update', [upload.single('pfp'), isLoggedInMiddleWare], async (req
     const username = body.username
     await uploadFile(file)
     .then((response) => {
-        console.log(response)
-        return res.status(200).send()
+        let location = response.Location;
+        User.updateUser(id, username, location)
+        .then((result) => {
+            console.log(result);
+            return res.status(200).send();
+        })
     });
     
 
