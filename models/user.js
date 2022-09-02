@@ -16,6 +16,11 @@ const User = {
         return pool.query(query, [id, username, pfp]);
     },
 
+    updatepfp: function(id, pfp){
+        const query = `UPDATE users SET pfp = $2 WHERE id = $1`
+        return pool.query(query, [id, pfp]);
+    },
+
     getDetails: function(id){
         const query = `SELECT * FROM users WHERE id = $1`;
         return pool.query(query, [id]);
