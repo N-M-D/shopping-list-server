@@ -24,6 +24,11 @@ const User = {
     getDetails: function(id){
         const query = `SELECT * FROM users WHERE id = $1`;
         return pool.query(query, [id]);
+    },
+
+    deleteUser: function(id){
+        const query = `DELETE FROM users WHERE id = $1`;
+        return pool.query(query, [id])
     }
 }
 

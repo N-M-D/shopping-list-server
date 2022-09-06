@@ -103,8 +103,6 @@ app.put('/user/update', [upload.single('pfp'), isLoggedInMiddleWare], async (req
             
         })
     });
-    
-
 })
 
 app.post('/user/details', isLoggedInMiddleWare, (req, res) => {
