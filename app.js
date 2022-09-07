@@ -141,6 +141,14 @@ app.post('/family', isLoggedInMiddleWare, (req, res) => {
     })
 })
 
+app.get('/families', isLoggedInMiddleWare, (req, res) => {
+    const id = req.decodedToken.user_id;
+    Family.getFamilies(id)
+    .then((result) => {
+        return res.status(200).send(result);
+    })
+})
+
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).json({ error: err.message });

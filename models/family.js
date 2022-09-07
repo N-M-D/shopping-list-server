@@ -7,8 +7,13 @@ const Family = {
     },
 
     getMembers: function(id){
-        const query = `GET userID FROM "families-users" WHERE familyID = $1`;
+        const query = `SELECT userID FROM "families-users" WHERE familyID = $1`;
         return pool.query(query, [id]);
+    },
+
+    getFamilies: function(id){
+        const query = `SELECT "familyID" FROM "families-users" WHERE "userID" = $1`;
+        return pool.query(query, [id])
     },
 
     addMember: function(familyID, userID){
