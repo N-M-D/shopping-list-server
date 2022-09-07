@@ -149,6 +149,19 @@ app.get('/families', isLoggedInMiddleWare, (req, res) => {
     })
 })
 
+app.get('/family/:id', (req, res) => {
+    const id = req.params.id;
+    Family.getFamilyDetails(id)
+    .then((response) => {
+        console.log(response);
+        res.status(200).send(response);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(404).send(error);
+    })
+})
+
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).json({ error: err.message });

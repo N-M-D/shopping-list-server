@@ -16,6 +16,11 @@ const Family = {
         return pool.query(query, [id])
     },
 
+    getFamilyDetails: function(id){
+        const query = `SELECT * FROM families WHERE familyID = $1`;
+        return pool.query(query, [id])
+    },
+
     addMember: function(familyID, userID){
         const query = `INSERT INTO "families-users" ("familyID", "userID") VALUES ($1, $2)`;
         return pool.query(query, [familyID, userID]);
