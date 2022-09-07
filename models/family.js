@@ -2,7 +2,7 @@ const pool = require('../database_connection');
 
 const Family = {
     create: function(name){
-        const query = `INSERT INTO families (name) VALUES ($1)`;
+        const query = `INSERT INTO families (name) VALUES ($1) returning id`;
         return pool.query(query, [name]);
     },
 
@@ -12,7 +12,7 @@ const Family = {
     },
 
     addMember: function(familyID, userID){
-        const query = `INSERT INTO "families-users" (familyID, userID) VALUES ($1, $2)`;
+        const query = `INSERT INTO "families-users" ("familyID", "userID") VALUES ($1, $2)`;
         return pool.query(query, [familyID, userID]);
     },
 
@@ -26,3 +26,5 @@ const Family = {
         return pool.query(query, [familyID, userID]);
     }
 }
+
+module.exports = Family;

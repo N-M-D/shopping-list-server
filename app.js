@@ -21,7 +21,8 @@ const { uploadFile } = require("./models/s3")
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const isLoggedInMiddleWare = require('./isLoggedInMiddleware')
+const isLoggedInMiddleWare = require('./isLoggedInMiddleware');
+const Family = require('./models/family');
 
 app.use(cors());
 
@@ -110,6 +111,33 @@ app.post('/user/details', isLoggedInMiddleWare, (req, res) => {
     User.getDetails(id)
     .then((response) => {
         return res.status(200).send(response);
+    })
+})
+
+app.post('/family', isLoggedInMiddleWare, (req, res) => {
+    const userID = req.decodedToken.user_id;
+    const body = req.body;
+    const name = req.body.name;
+    Family.create(name)
+    .then((result) => {
+        const rowCount = result.rowCount;
+        if(rowCount > 0){
+            const familyID = result.rows[0].id;
+            console.log("FamilyID ", familyID);
+            Family.addMember(familyID, userID)
+            .then((response) => {
+                if(response.rowCount > 0){
+                    return res.status(200).send();
+                }
+                throw "Failed in inserting user into family";
+            })
+        }else{
+            throw "Failed in creating family";
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(400).send();
     })
 })
 
