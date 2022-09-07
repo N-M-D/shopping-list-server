@@ -17,7 +17,7 @@ const Family = {
     },
 
     getFamilyDetails: function(id){
-        const query = `SELECT * FROM families WHERE familyID = $1`;
+        const query = `SELECT * FROM families WHERE id = $1`;
         return pool.query(query, [id])
     },
 
