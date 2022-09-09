@@ -12,7 +12,7 @@ const Family = {
     },
 
     getFamilies: function(id){
-        const query = `SELECT "familyID" FROM "families-users" WHERE "userID" = $1`;
+        const query = `SELECT * FROM "families-users" fu INNER JOIN families f ON fu."familyID" = f.id WHERE "userID" = $1`;
         return pool.query(query, [id])
     },
 
