@@ -118,6 +118,9 @@ app.post('/family', isLoggedInMiddleWare, (req, res) => {
     const userID = req.decodedToken.user_id;
     const body = req.body;
     const name = req.body.name;
+    if(name == null){
+        name = "My family";
+    }
     Family.create(name)
     .then((result) => {
         const rowCount = result.rowCount;
