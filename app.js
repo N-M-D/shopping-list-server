@@ -117,7 +117,7 @@ app.post('/user/details', isLoggedInMiddleWare, (req, res) => {
 app.post('/family', isLoggedInMiddleWare, (req, res) => {
     const userID = req.decodedToken.user_id;
     const body = req.body;
-    const name = req.body.name;
+    let name = req.body.name;
     if(name == null){
         name = "My family";
     }
