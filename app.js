@@ -188,8 +188,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message });
 })
 
-//const PORT = process.env.PORT || 3000
-const PORT = 8080
+const PORT = process.env.PORT || 3000
+//const PORT = 8080
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`)
 })
