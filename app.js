@@ -166,12 +166,30 @@ app.get('/family/:id', (req, res) => {
     })
 })
 
+app.get('/family/:id/members', isLoggedInMiddleWare, (req, res) => {
+    const userID = req.decodedToken.user_id;
+    const familyID = req.params.id;
+    Family.verify(familyID, userID)
+    .then((response) => {
+        if(response.rowCount > 0){
+            Family.getMembers(familyID)
+            .then((result) => {
+                console.log(result)
+                return res.status(200).send(result);
+            })
+        }else{
+            return res.status(401).send();
+        };
+    })
+})
+
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).json({ error: err.message });
 })
 
-const PORT = process.env.PORT || 3000
+//const PORT = process.env.PORT || 3000
+const PORT = 8080
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`)
 })

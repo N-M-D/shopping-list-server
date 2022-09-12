@@ -1,13 +1,18 @@
 const pool = require('../database_connection');
 
 const Family = {
+
+    verify: function(familyID, userID){
+        const query = `SELECT * FROM "families-users" WHERE "familyID" = $1 AND "userID" = $2`;
+        return pool.query(query, [familyID, userID]); 
+    },
     create: function(name){
         const query = `INSERT INTO families (name) VALUES ($1) returning id`;
         return pool.query(query, [name]);
     },
 
     getMembers: function(id){
-        const query = `SELECT userID FROM "families-users" WHERE familyID = $1`;
+        const query = `SELECT "userID" FROM "families-users" WHERE "familyID" = $1`;
         return pool.query(query, [id]);
     },
 
