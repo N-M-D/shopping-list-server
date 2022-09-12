@@ -130,7 +130,7 @@ app.post('/family', isLoggedInMiddleWare, (req, res) => {
             Family.addMember(familyID, userID)
             .then((response) => {
                 if(response.rowCount > 0){
-                    return res.status(200).send();
+                    return res.status(200).send(response);
                 }
                 throw "Failed in inserting user into family";
             })
