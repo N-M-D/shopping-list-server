@@ -87,7 +87,14 @@ app.get('/user/username', isLoggedInMiddleWare, function(req, res){
     const id = req.decodedToken.user_id;
     User.getUsername(id)
     .then((response) => {
-        console.log(response);
+        return res.status(200).send(response);
+    })
+})
+
+app.get('/user/:id', function(req, res){
+    const id = req.params.id;
+    User.getUsername(id)
+    .then((response) => {
         return res.status(200).send(response);
     })
 })
