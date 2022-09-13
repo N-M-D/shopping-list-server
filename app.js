@@ -23,6 +23,7 @@ app.use(bodyParser.json())
 
 const isLoggedInMiddleWare = require('./isLoggedInMiddleware');
 const Family = require('./models/family');
+const { nanoid } = require('nanoid');
 
 app.use(cors());
 
@@ -192,6 +193,26 @@ app.get('/family/:id/members', isLoggedInMiddleWare, (req, res) => {
             .then((result) => {
                 console.log(result)
                 return res.status(200).send(result);
+            })
+        }else{
+            return res.status(401).send();
+        };
+    })
+})
+
+app.post('/family/:id/link', isLoggedInMiddleWare, (req, res) => {
+    const familyID = req.params.id;
+    const userID = req.decodedToken.user_id;
+    Family.verify(familyID, userID)
+    .then((response) => {
+        if(response.rowCount > 0){
+            Family.deleteCode(familyID)
+            .then(() => {
+                const key = nanoid();
+                Family.generateLink(familyID, key)
+                .then((result) => {
+                    res.status(200).send(result);
+                })
             })
         }else{
             return res.status(401).send();

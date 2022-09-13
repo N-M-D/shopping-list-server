@@ -11,6 +11,11 @@ const Family = {
         return pool.query(query, [name]);
     },
 
+    generateLink: function(familyID, key){
+        const query = `INSERT INTO "familyInvite" ("familyID", key) VALUES ($1, $2) RETURNING key`;
+        return pool.query(query, [familyID, key]);
+    },
+
     getMembers: function(id){
         const query = `SELECT "userID" FROM "families-users" WHERE "familyID" = $1`;
         return pool.query(query, [id]);
@@ -33,6 +38,11 @@ const Family = {
 
     delete: function(familyID){
         const query = `DELETE FROM families WHERE id = $1`;
+        return pool.query(query, [familyID]);
+    },
+
+    deleteCode: function(familyID){
+        const query = `DELETE FROM "familyInvite" WHERE "familyID" = $1`;
         return pool.query(query, [familyID]);
     },
 
