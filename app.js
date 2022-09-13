@@ -83,6 +83,15 @@ app.post('/login', function(req, res){
     })
 })
 
+app.get('/user/username', isLoggedInMiddleWare, function(req, res){
+    const id = req.decodedToken.user_id;
+    User.getUsername(id)
+    .then((response) => {
+        console.log(response);
+        return res.status(200).send(response);
+    })
+})
+
 app.put('/user/update', [upload.single('pfp'), isLoggedInMiddleWare], async (req, res) => {
     const id = req.decodedToken.user_id;
     console.log("ID:",id);
@@ -188,8 +197,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message });
 })
 
-const PORT = process.env.PORT || 3000
-//const PORT = 8080
+//const PORT = process.env.PORT || 3000
+const PORT = 8080
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`)
 })

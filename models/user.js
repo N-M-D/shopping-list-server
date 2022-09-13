@@ -11,6 +11,11 @@ const User = {
         return pool.query(query, [email]);
     },
 
+    getUsername: function(id){
+        const query = `SELECT username FROM users WHERE id=$1`;
+        return pool.query(query, [id])
+    },
+
     updateUser: function(id, username, pfp){
         const query = `UPDATE users SET username = $2, pfp = $3 WHERE id = $1`;
         return pool.query(query, [id, username, pfp]);
